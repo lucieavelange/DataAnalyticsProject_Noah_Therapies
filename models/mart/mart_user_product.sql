@@ -5,8 +5,8 @@ WITH joined AS (
     SELECT s.*,
     p.age,
     p.basicCondition 
-    FROM dbtprojectnoah.dbt.dim_visit_logs_date_format AS s
-    JOIN dbtprojectnoah.source.source_user_data AS p
+    FROM {{ ref('src_visit_logs') }} AS s
+    JOIN {{ ref('src_user_data') }} AS p
     USING (userId)
 ),
 

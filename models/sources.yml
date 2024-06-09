@@ -1,8 +1,12 @@
 version: 2
 
 sources:
-  - name: dbtprojectnoah
+  - name: dbt
     schema: source  # Replace with your source name
     tables:
-      - name: visits  # Replace with your table name
-        identifier: source_visit_logs  # Replace with your table's fully qualified identifier
+      - name: visits_date_format
+        identifier: source_dim_visit_logs_date_format
+      - name: terms_classification
+        identifier: source_unique_term_interest 
+      - name: user_data
+        identifier: source_user_data

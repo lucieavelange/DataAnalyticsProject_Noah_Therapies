@@ -2,7 +2,7 @@ WITH avg_weekly_users AS (
   SELECT
     comb_ym,
     AVG(nb_weekly_users) AS avg_weekly_users
-  FROM dbtprojectnoah.dbt.stg_weely_users
+  FROM {{ ref('stg_weekly_users') }}
   GROUP BY comb_ym
   ORDER BY comb_ym ASC
 ),
@@ -13,7 +13,7 @@ comb AS (
   s.*,
   p.nb_monthly_users
   FROM avg_weekly_users AS s
-  JOIN dbtprojectnoah.dbt.stg_monthly_users AS p
+  JOIN {{ ref('stg_monthly_users') }} AS p
   USING (comb_ym)
 ),
 
@@ -28,5 +28,5 @@ FROM comb
 --Merge with visit logs
 SELECT *
 FROM product_stickiness
-JOIN dbtprojectnoah.dbt.dim_visit_logs_date_format
+JOIN {{ ref('src_visit_logs') }}
 USING (comb_ym)

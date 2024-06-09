@@ -9,7 +9,7 @@ WITH category_nb1 AS (
       THEN "Men's Health"
       ELSE "Women's Health"
     END AS Category_1 -- End Category 1
-  FROM dbtprojectnoah.dbt.src_unique_terms_interest
+  FROM {{ ref('src_unique_terms_interest') }}
 ),
 
 category_nb2 AS ( -- Start Category 2

@@ -102,7 +102,7 @@ THEN "PMS"
 ELSE "General Health" -- Mostly Nutrition and Hormone topics
 END AS Category_3 --End Category 3
 
-FROM dbtprojectnoah.dbt.src_unique_terms_interest
+FROM {{ ref('src_unique_terms_interest') }}
 ),
 
 next_categories AS ( --Sub-query

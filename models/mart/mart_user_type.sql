@@ -6,7 +6,7 @@ WITH f_date_format AS (
     *, 
     FORMAT_DATE('%Y', date) AS f_year, 
     FORMAT_DATE('%m', date) AS f_month
-  FROM dbtprojectnoah.dbt.dim_visit_logs_date_format
+  FROM {{ ref('src_visit_logs') }}
 ),
 
 -- Define date format to get the month-year dimension.
@@ -46,5 +46,5 @@ FROM type_final
 
 SELECT *
 FROM final AS p
-JOIN dbtprojectnoah.dbt.dim_visit_logs_date_format AS s
+JOIN {{ ref('src_visit_logs') }} AS s
 ON p.f_comb_ym=s.comb_ym

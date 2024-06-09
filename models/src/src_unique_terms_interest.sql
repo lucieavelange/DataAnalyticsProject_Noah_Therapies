@@ -1,5 +1,7 @@
-SELECT
-  string_field_0 AS Search_Term,
-  string_field_1 AS Search_Interest
+WITH unique_term_interest AS(
+    SELECT * FROM {{ source('dbt', 'terms_classification')}}
+)
+SELECT *
+
 FROM
-  dbtprojectnoah.source.source_search_interest
+    unique_term_interest

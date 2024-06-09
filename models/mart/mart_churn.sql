@@ -6,13 +6,13 @@ WITH churn AS (
     CASE 
         WHEN NOT EXISTS (
             SELECT 1 
-            FROM dbtprojectnoah.dbt.dim_visit_logs_date_format ua2
+            FROM {{ ref('src_visit_logs') }} ua2
             WHERE ua2.userId = ua.userId AND ua2.date > ua.date
         ) THEN 'churned'
         ELSE ''
     END AS churn_status,
     DATE_ADD(date, INTERVAL 1 MONTH) AS new_date_churn 
-FROM dbtprojectnoah.dbt.dim_visit_logs_date_format ua
+FROM {{ ref('src_visit_logs') }} ua
 ),
 
 --Review churn date format.

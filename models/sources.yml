@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: dbtprojectnoah
+    schema: source  # Replace with your source name
+    tables:
+      - name: visits  # Replace with your table name
+        identifier: source_visit_logs  # Replace with your table's fully qualified identifier

@@ -3,5 +3,5 @@ version: 2
 models:
   - name: src_unique_terms_interest
     description: Keep list of unique search terms (approx. 11000) and allocated search_interest classification
-  - name: mart_search_term_categories
+  - name: dim_search_term_categories
     description: Build the CASE queries to make the categories based on REGEXP conditions

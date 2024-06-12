@@ -10,3 +10,5 @@ sources:
         identifier: source_unique_term_interest 
       - name: user_data
         identifier: source_user_data
+      - name: search_terms
+        identifier: source_search_terms

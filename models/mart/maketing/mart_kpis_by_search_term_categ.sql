@@ -127,7 +127,7 @@ category_nb3 AS ( -- Start Category 3
 joined AS (
   SELECT *
   FROM category_nb3
-  JOIN dbtprojectnoah.source.source_search_terms
+  JOIN {{ ref('src_search_terms') }}
   USING (Search_Term)
 )
 

@@ -13,17 +13,13 @@ WITH churn AS (
     END AS churn_status,
     DATE_ADD(date, INTERVAL 1 MONTH) AS new_date_churn 
 FROM {{ ref('src_visit_logs') }} ua
-),
-
---Review churn date format.
-date_date AS (
-    SELECT *,
-    FORMAT_DATE('%Y', new_date_churn) AS churn_year,
-    FORMAT_DATE('%m', new_date_churn) AS month_churned
-FROM churn
 )
 
---Concatenate churn year and month. This way, the monthly churn can be easily calculated. 
 SELECT *,
-    CONCAT(churn_year, "-", month_churned) AS comb_ym_churn
-FROM date_date
+       CONCAT(FORMAT_DATE('%Y', new_date_churn), "-", FORMAT_DATE('%m', new_date_churn)) AS comb_ym_churn --outer query
+FROM (
+    SELECT *, --inner query
+           FORMAT_DATE('%Y', new_date_churn) AS churn_year,
+           FORMAT_DATE('%m', new_date_churn) AS month_churned
+    FROM churn
+) AS date_date

@@ -1,43 +1,24 @@
 -- The objective is to build graphs showing the average number of visits and average number of days spent on the app per age category and health condition. To do so, the latest cumulated time and number of visits per user need to be the only ones selected, and then group by the needed dimensions. 
 
---Define the age category. 
-WITH joined AS (
-    SELECT s.*,
-    p.age,
-    p.basicCondition 
+SELECT 
+sub.*,
+CASE
+    WHEN sub.age BETWEEN 18 AND 24 THEN '18-24'
+    WHEN sub.age BETWEEN 25 AND 34 THEN '25-34'
+    WHEN sub.age BETWEEN 35 AND 44 THEN '35-44'
+    WHEN sub.age BETWEEN 45 AND 54 THEN '45-54'
+    WHEN sub.age > 54 THEN '55+'
+    ELSE 'Unknown'
+END AS age_category,
+FROM (
+    SELECT 
+        s.*,
+        p.age,
+        p.basicCondition,
+        ROW_NUMBER() OVER (PARTITION BY s.userId ORDER BY s.Total_cumulated_session_length__in_sec_ DESC) AS rank_time,
+        ROW_NUMBER() OVER (PARTITION BY s.userId ORDER BY Nb_visits DESC) AS rank_visits
     FROM {{ ref('src_visit_logs') }} AS s
     JOIN {{ ref('src_user_data') }} AS p
     USING (userId)
-),
-
-category AS (
-    SELECT *,
-        CASE
-            WHEN age BETWEEN 18 AND 24 THEN '18-24'
-            WHEN age BETWEEN 25 AND 34 THEN '25-34'
-            WHEN age BETWEEN 35 AND 44 THEN '35-44'
-            WHEN age BETWEEN 45 AND 54 THEN '45-54'
-            WHEN age > 54 THEN '55+'
-            ELSE 'Unknown'
-        END AS age_category,
-    FROM joined
-),
-
--- Define latest time and number of visits per user.
-def_latest AS (
-    SELECT
-        userId,
-        age,
-        age_category,
-        basicCondition,
-        Total_cumulated_session_length__in_sec_,
-        Nb_visits,
-        ROW_NUMBER() OVER (PARTITION BY userId ORDER BY Total_cumulated_session_length__in_sec_ DESC) AS rank_time,
-        ROW_NUMBER() OVER (PARTITION BY userId ORDER BY Nb_visits DESC) AS rank_visits
-    FROM
-        category
-)
-
-SELECT *
-FROM def_latest
-  WHERE rank_time=1 AND rank_visits=1 -- The table keeps only the MAX figures per userId. The average calculation and group-by function are done on Looker. 
+) AS sub
+WHERE sub.rank_time = 1 AND sub.rank_visits = 1

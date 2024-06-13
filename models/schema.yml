@@ -2,6 +2,10 @@ version: 2
 
 models:
   - name: src_unique_terms_interest
-    description: Keep list of unique search terms (approx. 11000) and allocated search_interest classification
-  - name: dim_search_term_categories
-    description: Build the CASE queries to make the categories based on REGEXP conditions
+    description: Classification of search terms within search interest
+  - name: src_search_terms
+    description: Google Ads extract list of search terms with impressions, clicks, conversions info
+  - name: src_user_data
+    description: User data including age, health condition, symptoms, interests, health goals
+  - name: src_visit_logs
+    description: Visit logs table from Matomo (clean version) includes a key comb_ym that combines the year and month for each entry. This key is used to join analytics information and generate a monthly overtime view.

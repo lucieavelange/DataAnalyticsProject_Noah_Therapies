@@ -1,32 +1,21 @@
-WITH avg_weekly_users AS (
-  SELECT
-    comb_ym,
-    AVG(nb_weekly_users) AS avg_weekly_users
-  FROM {{ ref('stg_weekly_users') }}
-  GROUP BY comb_ym
-  ORDER BY comb_ym ASC
-),
-
--- Join average weekly users with number of monthly users.
-comb AS (
-  SELECT
-  s.*,
-  p.nb_monthly_users
-  FROM avg_weekly_users AS s
-  JOIN {{ ref('stg_monthly_users') }} AS p
-  USING (comb_ym)
-),
-
--- Calculate product stickiness: % likelihood a user would use the app on a weekly basis. 
-product_stickiness AS (
-    SELECT 
-    *,
-    ROUND(avg_weekly_users / nb_monthly_users, 4) AS product_stickiness
-FROM comb
+-- Definition of the product stickiness within a CTE
+WITH df_product_stickiness AS (
+    SELECT
+    s.comb_ym,
+    ROUND(avg_weekly_users / p.nb_monthly_users, 4) AS product_stickiness
+FROM (
+    SELECT -- inner subquery
+        comb_ym,
+        AVG(nb_weekly_users) AS avg_weekly_users
+    FROM {{ ref('stg_weekly_users') }}
+    GROUP BY comb_ym
+) AS s
+JOIN {{ ref('stg_monthly_users') }} AS p
+USING (comb_ym)
 )
 
---Merge with visit logs
-SELECT *
-FROM product_stickiness
-JOIN {{ ref('src_visit_logs') }}
+-- Join results with main visit logs
+SELECT s.*, ps.product_stickiness
+FROM df_product_stickiness AS ps
+LEFT JOIN {{ ref('src_visit_logs') }} AS s
 USING (comb_ym)

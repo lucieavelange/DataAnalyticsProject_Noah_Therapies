@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: dbt
-    schema: source  # Replace with your source name
+    schema: source  
     tables:
       - name: visits_date_format
         identifier: source_dim_visit_logs_date_format

@@ -2,6 +2,7 @@
 WITH df_product_stickiness AS (
     SELECT
     s.comb_ym,
+    avg_weekly_users,
     ROUND(avg_weekly_users / p.nb_monthly_users, 4) AS product_stickiness
 FROM (
     SELECT -- inner subquery
@@ -15,7 +16,7 @@ USING (comb_ym)
 )
 
 -- Join results with main visit logs
-SELECT s.*, ps.product_stickiness
+SELECT s.*, ps.product_stickiness, ps.avg_weekly_users
 FROM df_product_stickiness AS ps
 LEFT JOIN {{ ref('src_visit_logs') }} AS s
 USING (comb_ym)

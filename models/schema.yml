@@ -1,8 +1,6 @@
 version: 2
 
 models:
-  - name: src_unique_terms_interest
-    description: Classification of search terms within search interest
   - name: src_search_terms
     description: Google Ads extract list of search terms with impressions, clicks, conversions info
   - name: src_user_data

@@ -6,8 +6,6 @@ sources:
     tables:
       - name: visits_date_format
         identifier: source_dim_visit_logs_date_format
-      - name: terms_classification
-        identifier: source_unique_term_interest 
       - name: user_data
         identifier: source_user_data
       - name: search_terms

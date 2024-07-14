@@ -272,7 +272,7 @@ WHEN Category_1 = "Women's Health" THEN
               OR REGEXP_CONTAINS(Search_Term, r'prolaktinom therapie')
               OR REGEXP_CONTAINS(Search_Term, r'molekulartherapie')
               OR REGEXP_CONTAINS(Search_Term, r'oncotype test')
-              OR REGEXP_CONTAINS(Search_Term, r'mistel') -- alternative medicine specific to cancer
+              OR REGEXP_CONTAINS(Search_Term, r'mistel') 
               OR REGEXP_CONTAINS(Search_Term, r'mispel')
               OR REGEXP_CONTAINS(Search_Term, r'iscador')
               OR REGEXP_CONTAINS(Search_Term, r'gepardouze')
@@ -882,7 +882,7 @@ WHEN Category_2 = "Non-Healthy" THEN
               OR REGEXP_CONTAINS(Search_Term, r'androgendeprivationstherapie')
               OR REGEXP_CONTAINS(Search_Term, r'molekulartherapie')
               OR REGEXP_CONTAINS(Search_Term, r'oncotype test')
-              OR REGEXP_CONTAINS(Search_Term, r'mistel') -- alternative medicine specific to cancer
+              OR REGEXP_CONTAINS(Search_Term, r'mistel') 
               OR REGEXP_CONTAINS(Search_Term, r'mispel')
               OR REGEXP_CONTAINS(Search_Term, r'iscador')
               OR REGEXP_CONTAINS(Search_Term, r'gepardouze')
@@ -8139,7 +8139,7 @@ THEN 'Ayurveda_bc'
             OR REGEXP_CONTAINS(Search_Term, r'meal plan')
             OR REGEXP_CONTAINS(Search_Term, r'obst')
             OR REGEXP_CONTAINS(Search_Term, r'eiweiß')
-            OR REGEXP_CONTAINS(Search_Term, r'ernaehrung') --ones from GC integrative medicine
+            OR REGEXP_CONTAINS(Search_Term, r'ernaehrung') 
             OR REGEXP_CONTAINS(Search_Term, r'datteln')
             OR REGEXP_CONTAINS(Search_Term, r'brokkoli')
             OR REGEXP_CONTAINS(Search_Term, r'aprikosen')
@@ -8616,7 +8616,7 @@ THEN 'Ayurveda_gc'
             OR REGEXP_CONTAINS(Search_Term, r'meal plan')
             OR REGEXP_CONTAINS(Search_Term, r'obst')
             OR REGEXP_CONTAINS(Search_Term, r'eiweiß')
-            OR REGEXP_CONTAINS(Search_Term, r'ernaehrung') --ones from GC integrative medicine
+            OR REGEXP_CONTAINS(Search_Term, r'ernaehrung') 
             OR REGEXP_CONTAINS(Search_Term, r'datteln')
             OR REGEXP_CONTAINS(Search_Term, r'brokkoli')
             OR REGEXP_CONTAINS(Search_Term, r'aprikosen')
